@@ -11,11 +11,16 @@ Cada Actividad de Formacion Practica tiene su carpeta con las aplicaciones desar
 
 ```
 Grupo_3_TDII_2026/
-└── AFP_3_TDII_2026/
-    ├── App_3_1_Grupo_3_2026/
-    ├── App_3_2_Grupo_3_2026/
-    ├── App_3_3_Grupo_3_2026/
-    └── App_3_4_Grupo_3_2026/
+├── AFP_3_TDII_2026/
+│   ├── App_3_1_Grupo_3_2026/
+│   ├── App_3_2_Grupo_3_2026/
+│   ├── App_3_3_Grupo_3_2026/
+│   └── App_3_4_Grupo_3_2026/
+└── AFP_4_TDII_2026/
+    ├── App_4_1_Grupo_3_2026/
+    ├── App_4_2_Grupo_3_2026/
+    ├── App_4_3_Grupo_3_2026/
+    └── App_4_4_Grupo_3_2026/
 ```
 
 ## AFP 3 - Driver GPIO
@@ -36,3 +41,16 @@ El driver es **portable**: los pines se identifican mediante la estructura
 puerto ni a una placa en particular. Funciones exportadas:
 `writeLedOn_GPIO`, `writeLedOff_GPIO`, `toggleLed_GPIO`, `readButton_GPIO` y
 `MX_GPIO_Init` (la inicializacion de pines vive dentro del driver).
+
+## AFP 4 - Retardos no bloqueantes
+
+Creacion del driver `API_delay` (`delay_t` basado en `HAL_GetTick`) e
+integracion en las mismas aplicaciones, reemplazando `HAL_Delay()` por
+retardos no bloqueantes. El lazo principal nunca se detiene: el pulsador se
+lee en cada iteracion y responde de inmediato.
+
+Funciones exportadas: `delayInit`, `delayRead`, `delayWrite`. Tipos: `tick_t`,
+`bool_t`, `delay_t` (cada instancia es un retardo independiente — en App_4_3
+se usan 3 retardos simultaneos, uno por led).
+
+Los drivers se acumulan: cada proyecto de AFP4 carga `API_GPIO` y `API_delay`.
