@@ -16,11 +16,16 @@ Grupo_3_TDII_2026/
 │   ├── App_3_2_Grupo_3_2026/
 │   ├── App_3_3_Grupo_3_2026/
 │   └── App_3_4_Grupo_3_2026/
-└── AFP_4_TDII_2026/
-    ├── App_4_1_Grupo_3_2026/
-    ├── App_4_2_Grupo_3_2026/
-    ├── App_4_3_Grupo_3_2026/
-    └── App_4_4_Grupo_3_2026/
+├── AFP_4_TDII_2026/
+│   ├── App_4_1_Grupo_3_2026/
+│   ├── App_4_2_Grupo_3_2026/
+│   ├── App_4_3_Grupo_3_2026/
+│   └── App_4_4_Grupo_3_2026/
+└── AFP_5_TDII_2026/
+    ├── App_5_1_Grupo_3_2026/
+    ├── App_5_2_Grupo_3_2026/
+    ├── App_5_3_Grupo_3_2026/
+    └── App_5_4_Grupo_3_2026/
 ```
 
 ## AFP 3 - Driver GPIO
@@ -54,3 +59,30 @@ Funciones exportadas: `delayInit`, `delayRead`, `delayWrite`. Tipos: `tick_t`,
 se usan 3 retardos simultaneos, uno por led).
 
 Los drivers se acumulan: cada proyecto de AFP4 carga `API_GPIO` y `API_delay`.
+
+## AFP 5 - Antirrebote por maquina de estados
+
+Creacion del driver `API_debounce`: una maquina de estados finitos de cuatro
+estados (`BUTTON_UP`, `BUTTON_FALLING`, `BUTTON_DOWN`, `BUTTON_RISING`) que
+valida cada flanco del pulsador con un retardo de 40 ms provisto por
+`API_delay`, eliminando el rebote mecanico por software.
+
+El driver es **independiente del hardware**: no lee ningun pin ni acciona
+leds. La aplicacion le inyecta la lectura logica del boton
+(`debounceFSM_update(readButton_GPIO(userButton))`) y define las acciones de
+cada flanco implementando las funciones `buttonPressed()` y
+`buttonReleased()`, declaradas en el driver.
+
+Funciones exportadas: `debounceFSM_init`, `debounceFSM_update`, `readKey`
+(evento one-shot de pulsacion). Las cuatro aplicaciones repiten los
+comportamientos de AFP4, ahora con el pulsador filtrado por la MEF:
+
+| App | Descripcion |
+|-----|-------------|
+| App_5_1 | Validacion del antirrebote: pulsacion -> invierte LD1, liberacion -> invierte LD3 |
+| App_5_2 | Secuencia LD1->LD2->LD3; cada pulsacion validada invierte el sentido |
+| App_5_3 | Pulsacion validada alterna las 4 secuencias |
+| App_5_4 | Pulsacion validada cicla el tiempo de alternancia: 100 / 250 / 500 / 1000 ms |
+
+Los drivers se acumulan: cada proyecto de AFP5 carga `API_GPIO`, `API_delay`
+y `API_debounce`.
