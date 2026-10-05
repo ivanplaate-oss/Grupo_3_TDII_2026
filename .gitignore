@@ -1,0 +1,17 @@
+# Ignorar carpetas de compilacion
+Debug/
+Release/
+
+# Ignorar la configuracion de Eclipse/STM32CubeIDE
+.metadata/
+.settings/
+*.launch
+*.log
+*.tmp
+*.pdom
+
+# Ignorar archivos temporales del sistema
+*.swp
+*.bak
+*.DS_Store
+Thumbs.db
