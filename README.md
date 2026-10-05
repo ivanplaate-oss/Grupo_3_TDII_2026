@@ -21,11 +21,12 @@ Grupo_3_TDII_2026/
 │   ├── App_4_2_Grupo_3_2026/
 │   ├── App_4_3_Grupo_3_2026/
 │   └── App_4_4_Grupo_3_2026/
-└── AFP_5_TDII_2026/
-    ├── App_5_1_Grupo_3_2026/
-    ├── App_5_2_Grupo_3_2026/
-    ├── App_5_3_Grupo_3_2026/
-    └── App_5_4_Grupo_3_2026/
+├── AFP_5_TDII_2026/
+│   ├── App_5_1_Grupo_3_2026/
+│   ├── App_5_2_Grupo_3_2026/
+│   ├── App_5_3_Grupo_3_2026/
+│   └── App_5_4_Grupo_3_2026/
+└── informes/                    (informes de cada AFP en PDF y fuente Markdown)
 ```
 
 ## AFP 3 - Driver GPIO
